@@ -1,6 +1,5 @@
-import axios from 'axios';
-import cheerio from 'cheerio';
 import express from 'express';
+import axios from 'axios';
 import path from 'path';
 
 const app = express();
@@ -13,12 +12,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(path.resolve(), 'public', 'index.html'));
 });
 
-app.get('/gpt4free', async (req, res) => {
+app.get('/freechatgptonline', async (req, res) => {
     const text = req.query.text;
     if (!text) return res.status(400).send('Text is required');
     try {
-        let result = await generate(text);
-        res.send(result);
+        const result = await generate(text);
+        res.send(result.reply);
     } catch (e) {
         res.status(500).send(e.message);
     }
@@ -30,8 +29,7 @@ app.listen(port, () => {
 
 async function generate(q) {
     try {
-        const nonceValue = JSON.parse(cheerio.load(await (await axios.get("https://gpt4free.io/chat")).data)(".mwai-chatbot-container").attr("data-system")).restNonce;
-        const { data } = await axios("https://gpt4free.io/wp-json/mwai-ui/v1/chats/submit", {
+        const { data } = await axios("https://www.freechatgptonline.com/wp-json/mwai-ui/v1/chats/submit", {
             method: "post",
             data: {
                 botId: "default",
@@ -39,13 +37,13 @@ async function generate(q) {
                 stream: false
             },
             headers: {
-                "X-WP-Nonce": nonceValue,
+                Accept: "text/event-stream",
                 "Content-Type": "application/json"
             }
         });
-        return data.reply;
+        return data;
     } catch (err) {
         console.log(err.response.data);
-        return err.response.data.message;
+        return { reply: err.response.data.message };
     }
 }
