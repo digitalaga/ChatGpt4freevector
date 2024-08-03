@@ -1,7 +1,9 @@
 {
-  "name": "gpt4free-bot",
+  "name": "freechatgptonline-bot",
   "version": "1.0.0",
+  "description": "A simple chatbot using FreeChatGPT API",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js"
   },
@@ -9,6 +11,5 @@
     "axios": "^1.4.0",
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.18.2"
-  },
-  "type": "module"
+  }
 }
