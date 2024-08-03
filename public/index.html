@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeChatGPT Online</title>
+    <title>GPT Chatly</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,7 +42,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>FreeChatGPT Online</h1>
+        <h1>GPT Chatly</h1>
         <input type="text" id="userInput" placeholder="Enter your message here">
         <button onclick="sendMessage()">Send</button>
         <div id="response" class="response"></div>
@@ -59,7 +59,7 @@
             }
 
             try {
-                const response = await fetch(`/freechatgptonline?text=${encodeURIComponent(userInput)}`);
+                const response = await fetch(`/gptchatly?text=${encodeURIComponent(userInput)}`);
                 const result = await response.text();
                 responseDiv.innerText = result;
             } catch (error) {
